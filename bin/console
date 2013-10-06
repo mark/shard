@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+Bundler.require(:default)
+
+$:.unshift 'lib'
+
+require 'shard'
+require 'irb'
+require 'irb/completion'
+
+IRB.start
