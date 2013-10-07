@@ -42,4 +42,13 @@ describe Shard::Loader do
 
   end
 
+  describe "Loading" do
+
+    it "will load the provided file" do
+
+    end
+    
+  end
+
+
 end

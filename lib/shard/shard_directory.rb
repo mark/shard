@@ -17,9 +17,15 @@ class Shard
     def self.create_shard_dir(username, shard, version)
       dir = directory(username, shard, version)
 
-      unless Dir.exists?(dir)
+      unless shard_dir_exists?(username, shard, version)
         FileUtils.mkpath(dir)
       end
+    end
+
+    def self.shard_dir_exists?(username, shard, version)
+      dir = directory(username, shard, version)
+
+      Dir.exists?(dir)
     end
 
     def self.directory(username, shard, version)

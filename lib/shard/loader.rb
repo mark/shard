@@ -30,8 +30,8 @@ class Shard
     #               #
     #################
     
-    def self.load(shard, version, scope)
-      new(shard, version).load!(scope)
+    def self.load(shard_line, scope)
+      new(shard_line).load!(scope)
     end
 
     ####################
@@ -40,11 +40,26 @@ class Shard
     #                  #
     ####################
     
-    def load!(scope)
+    def load!
+      ensure_shard_saved
 
+      require file_path(username, shard, version, filename)
     end
 
     private
+
+    def already_loaded?
+      shard_dir_exists?(username, shard, version)
+    end
+
+    def ensure_shard_saved
+      unless already_loaded?
+        lister    = Shard::Lister.new(username)
+        shard_obj = lister.shards[shard]
+
+        Shard::Saver.save shard, version
+      end
+    end
 
     def parse_filename(raw_filename)
       return 'shard.rb' unless raw_filename
