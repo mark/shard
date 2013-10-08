@@ -32,12 +32,17 @@ class Shard
     
     def shards
       @shards ||= Hash.new.tap do |hash|
-        shard_configs = shard_gist.shard_configs
-
-        shard_configs.each do |name, configs|
-          hash[name] = build_shard(configs)
+        gists.each do |gist|
+          if Shard::ShardRecord.valid_shard?(gist)
+            shard            = Shard::ShardRecord.new(gist)
+            hash[shard.name] = shard
+          end
         end
       end
+    end
+
+    def shard_names
+      shards.keys.sort
     end
 
     private
@@ -51,18 +56,7 @@ class Shard
     end
 
     def load_gists
-      gists = fetch_gists
-
-      @gists = gists.map { |gist| Gist.new(gist) }
-    end
-
-    def build_shard(configs)
-      gist = gist_by_id(configs['id'])
-      Shard::ShardRecord.new(configs, gist)
-    end
-
-    def shard_gist
-      @shard_gist ||= gists.detect { |gist| gist.description == 'Shards' }
+      @gists = fetch_gists.map { |gist| Gist.new(gist) }
     end
 
   end

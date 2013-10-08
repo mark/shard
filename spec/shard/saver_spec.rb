@@ -1,8 +1,6 @@
 require 'spec_helper'
 
-include Shard
-
-describe Saver do
+describe Shard::Saver do
 
   it "must be true" do
     true.must_equal true

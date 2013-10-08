@@ -12,8 +12,8 @@ describe Shard::Lister do
 
   describe :gists do
 
-    it "should list 3 gists" do
-      subject.gists.length.must_equal 3
+    it "lists 5 gists" do
+      subject.gists.length.must_equal 5
     end
 
     it "returns Gists" do
@@ -26,8 +26,8 @@ describe Shard::Lister do
 
   describe :shards do
 
-    it "should list 2 shards" do
-      subject.shards.length.must_equal 2
+    it "lists 4 shards" do
+      subject.shards.length.must_equal 4
     end
 
     it "returns ShardRecords" do

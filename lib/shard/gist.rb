@@ -11,14 +11,16 @@ class Shard
     #              #
     ################
 
+    SHARD_FILENAME = /(?:^(\w+)\.)?shard\.rb$/
+
     ###############
     #             #
     # Constructor #
     #             #
     ###############
     
-    def initialize(hash)
-      @basic = hash
+    def initialize(gist_hash)
+      @gist_hash = gist_hash
     end
 
     ####################
@@ -28,37 +30,29 @@ class Shard
     ####################
     
     def description
-      @basic.description
+      @gist_hash.description
     end
 
     def id
-      @basic.id
+      @gist_hash.id
     end
     
     def ruby_files
       files.select { |filename| filename =~ /\.rb$/ }.values
     end
 
-    def shard_configs
-      return @shard_configs if @shard_configs
+    def shard_file
+      files.select { |filename| filename =~ SHARD_FILENAME }.values.first
+    end
 
-      file = files['shards.yml']
-      return (@shard_configs = {}) unless file
-
-      file_url = file.raw_url
-      contents = open(file_url).read
-
-      @shard_configs = if contents
-        YAML.load contents
-      else
-        {}
-      end
+    def url
+      @gist_hash.html_url
     end
 
     private
 
     def files
-      @basic.files
+      @gist_hash.files
     end
 
 

@@ -6,21 +6,6 @@ describe Shard::Gist do
 
   subject { Shard::Gist.new(hashie) }
 
-  describe "config gist" do
-
-    let(:gist_name) { 'Shards' }
-
-    it "has a shard config" do
-      subject.shard_configs.must_be_instance_of Hash
-    end
-
-    it "specifies 2 shards" do
-      subject.shard_configs.keys.length.must_equal 2
-      subject.shard_configs['sample_shard'].wont_be_nil
-    end
-
-  end
-
   describe "shard gist" do
 
     let(:gist_name) { 'Shard: multiple files sample' }
@@ -30,8 +15,7 @@ describe Shard::Gist do
     end
 
     it "has a shard.rb file" do
-      f = subject.ruby_files.detect { |f| f.filename == 'shard.rb' }
-      f.wont_be_nil
+      subject.shard_file.wont_be_nil
     end
 
   end
