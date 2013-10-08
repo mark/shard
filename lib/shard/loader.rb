@@ -30,8 +30,8 @@ class Shard
     #               #
     #################
     
-    def self.load(shard_line, scope)
-      new(shard_line).load!(scope)
+    def self.load(shard_line)
+      new(shard_line).load!
     end
 
     ####################
