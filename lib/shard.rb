@@ -1,4 +1,6 @@
 gem 'octokit'
+gem 'thor'
+
 require 'open-uri'
 
 require 'shard/shard_directory'
@@ -7,6 +9,7 @@ require 'shard/saver'
 require 'shard/lister'
 require 'shard/gist'
 require 'shard/shard_record'
+require 'shard/cli'
 
 class Shard
 

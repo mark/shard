@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'rake'
+gem 'octokit'
+gem 'thor'
 
 group :test do
   gem 'minitest',  require: false
