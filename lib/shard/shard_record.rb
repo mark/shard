@@ -6,7 +6,7 @@ class Shard::ShardRecord
   #              #
   ################
   
-  attr_reader :gist
+  attr_reader :username, :name, :version
 
   ###############
   #             #
@@ -14,18 +14,10 @@ class Shard::ShardRecord
   #             #
   ###############
   
-  def initialize(gist)
-    @gist = gist
-  end
-
-  #################
-  #               #
-  # Class Methods #
-  #               #
-  #################
-  
-  def self.valid_shard?(gist)
-    ! gist.shard_file.nil?
+  def initialize(username, name, version = "HEAD")
+    @username = username
+    @name     = name
+    @version  = version
   end
 
   ####################
@@ -33,28 +25,5 @@ class Shard::ShardRecord
   # Instance Methods #
   #                  #
   ####################
-
-  def description
-    gist.description
-  end
-
-  def name
-    shard_file = gist.shard_file
-    match      = shard_file.filename.match(Shard::Gist::SHARD_FILENAME)
-
-    match[1] || gist.id
-  end
-
-  def url
-    gist.url
-  end
-
-  def username
-    gist.user.login
-  end
-
-  def versions
-    # @gist
-  end
 
 end

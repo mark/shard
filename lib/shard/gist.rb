@@ -37,6 +37,12 @@ class Shard
       @gist_hash.id
     end
     
+    def name
+      match = shard_file.filename.match(SHARD_FILENAME)
+
+      match[1] || id
+    end
+
     def ruby_files
       files.select { |filename| filename =~ /\.rb$/ }.values
     end
@@ -47,6 +53,14 @@ class Shard
 
     def url
       @gist_hash.html_url
+    end
+
+    def username
+      @gist_hash.user.login
+    end
+
+    def valid_shard?
+      ! shard_file.nil?
     end
 
     private
