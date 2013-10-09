@@ -36,13 +36,11 @@ class Shard::CLI < Thor
   #      #
   ########
   
-  desc "exec USERNAME SHARD", "Runs the shard named SHARD for Github user USERNAME"
+  desc "exec USERNAME/SHARD", "Runs the shard named SHARD for Github user USERNAME"
 
-  def exec(username, shard)
-    Shard::Loader.load "#{ username }/#{ shard }"
+  def exec(shard_line)
+    Shard::Loader.load shard_line
   end
-
-  desc "fetch USERNAME SHARD", "Downloads the shard named SHARD for Github user USERNAME"
 
   #########
   #       #
@@ -50,7 +48,10 @@ class Shard::CLI < Thor
   #       #
   #########
   
-  def fetch(username, shard)
+  desc "fetch USERNAME/SHARD", "Downloads the shard named SHARD for Github user USERNAME"
+
+  def fetch(shard_line)
+    username, shard = shard_line.split '/'
     shard = Shard::ShardRecord.new(username, shard, 'HEAD')
 
     Shard::Saver.save(shard)
@@ -62,9 +63,9 @@ class Shard::CLI < Thor
   #      #
   ########
   
-  desc "test USERNAME SHARD", "Runs the tests for shard named SHARD for Github user USERNAME"
+  desc "test USERNAME/SHARD", "Runs the tests for shard named SHARD for Github user USERNAME"
 
-  def test(username, shard)
+  def test(shard_line)
     Shard::Loader.test "#{ username }/#{ shard }"
   end
 
