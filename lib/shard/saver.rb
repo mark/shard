@@ -10,7 +10,7 @@ class Shard
     
     include ShardDirectory
 
-    attr_reader :shard, :version
+    attr_reader :shard, :gist, :full_gist
 
     ###############
     #             #
@@ -18,9 +18,8 @@ class Shard
     #             #
     ###############
     
-    def initialize(shard, version)
+    def initialize(shard)
       @shard   = shard
-      @version = version
     end
 
     #################
@@ -29,8 +28,8 @@ class Shard
     #               #
     #################
     
-    def self.save(shard, version)
-      new(shard, version).save!
+    def self.save(shard)
+      new(shard).save!
     end
 
     ####################
@@ -40,28 +39,30 @@ class Shard
     ####################
     
     def save!
-      create_shard_dir(shard.username, shard.name, version)
+      create_shard_dir(shard.username, shard.name, shard.version)
+      fetch_shard_contents
 
-      shard.ruby_files.each do |filename|
-        write_file(filename)
+      gist.ruby_files.each do |file|
+        write_file(file)
       end
     end
 
     private
 
+    def fetch_shard_contents
+      lister     = Shard::Lister.new(shard.username)
+      @gist      = lister.shards[shard.name]
+      @full_gist = Octokit.gist gist.id
+    end
+
     def file_contents(filename)
-      url = file_url(filename)
-      open(url).read
+      full_gist.files[filename].content
     end
 
-    def file_url(filename)
-      "https://gist.github.com/#{ shard.username }/#{ shard.id }/raw/#{ shard.commit(version) }/#{ filename }"
-    end
+    def write_file(file)
+      path = file_path(shard.username, shard.name, shard.version, file.filename)
 
-    def write_file(filename)
-      path = file_path(shard.username, shard.name, version, filename)
-
-      File.write path, file_contents(filename)
+      File.write path, file_contents(file.filename)
     end
     
   end
