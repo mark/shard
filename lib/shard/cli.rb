@@ -66,7 +66,7 @@ class Shard::CLI < Thor
   desc "test USERNAME/SHARD", "Runs the tests for shard named SHARD for Github user USERNAME"
 
   def test(shard_line)
-    Shard::Loader.test "#{ username }/#{ shard }"
+    Shard::Loader.test shard_line
   end
 
 end
