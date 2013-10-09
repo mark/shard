@@ -18,7 +18,7 @@ describe Shard::Lister do
 
     it "returns Gists" do
       subject.gists.each do |gist|
-        gist.instance_of? Shard::Gist
+        gist.must_be_instance_of Shard::Gist
       end
     end
 
@@ -31,8 +31,8 @@ describe Shard::Lister do
     end
 
     it "returns ShardRecords" do
-      subject.shards.each do |shard|
-        shard.instance_of? Shard::ShardRecord
+      subject.shards.each do |name, shard|
+        shard.must_be_instance_of Shard::Gist
       end
     end
 

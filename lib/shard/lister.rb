@@ -10,7 +10,7 @@ class Shard
     #              #
     ################
     
-    attr_reader :username, :gists
+    attr_reader :username
 
     ###############
     #             #
@@ -20,8 +20,6 @@ class Shard
     
     def initialize(username)
       @username = username
-      
-      load_gists
     end
 
     ####################
@@ -30,13 +28,15 @@ class Shard
     #                  #
     ####################
     
+    def gists
+      @gists ||= fetch_gists.map { |gist| Gist.new(gist) }
+    end
+
     def shards
       @shards ||= Hash.new.tap do |hash|
-        gists.each do |gist|
-          if Shard::ShardRecord.valid_shard?(gist)
-            shard            = Shard::ShardRecord.new(gist)
-            hash[shard.name] = shard
-          end
+        valid = gists.select { |gist| gist.valid_shard? }
+        valid.each do |shard|
+          hash[shard.name] = shard
         end
       end
     end
@@ -53,10 +53,6 @@ class Shard
 
     def gist_by_id(id)
       gists.detect { |gist| gist.id == id.to_s }
-    end
-
-    def load_gists
-      @gists = fetch_gists.map { |gist| Gist.new(gist) }
     end
 
   end
