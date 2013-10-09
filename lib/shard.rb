@@ -16,17 +16,4 @@ require 'shard/lister'
 require 'shard/gist'
 require 'shard/shard_record'
 require 'shard/cli'
-
-module Kernel
-
-  def shard(shard_line)
-    Shard::Loader.load(shard_line)
-  end
-
-  def require_shard_file(filename = nil)
-    raise ArgumentError unless Shard.current_loader
-
-    Shard.current_loader.load_file(filename)
-  end
-
-end
+require 'shard/kernel'
