@@ -3,6 +3,12 @@ gem 'thor'
 
 require 'open-uri'
 
+class Shard
+  class << self
+    attr_accessor :current_loader
+  end
+end
+
 require 'shard/shard_directory'
 require 'shard/loader'
 require 'shard/saver'
@@ -11,21 +17,13 @@ require 'shard/gist'
 require 'shard/shard_record'
 require 'shard/cli'
 
-class Shard
-
-  class << self
-    attr_reader :current_loader
-  end
-
-end
-
 module Kernel
 
   def shard(shard_line)
     Shard::Loader.load(shard_line)
   end
 
-  def require_shard_file(filename)
+  def require_shard_file(filename = nil)
     raise ArgumentError unless Shard.current_loader
 
     Shard.current_loader.load_file(filename)

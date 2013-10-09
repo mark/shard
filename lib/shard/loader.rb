@@ -47,14 +47,22 @@ class Shard
     def load
       ensure_shard_saved
 
+      Shard.current_loader, previous_loader = self, Shard.current_loader
       require shard_file_path
+      Shard.current_loader = previous_loader
+    end
+
+    def load_file(filename)
+      path = filename ? ruby_file_path(filename) : shard_file_path
+      require path
     end
 
     def test
       ensure_shard_saved
 
-      require shard_file_path
+      Shard.current_loader, previous_loader = self, Shard.current_loader
       require *shard_test_paths
+      Shard.current_loader = previous_loader
     end
 
     private
@@ -81,6 +89,10 @@ class Shard
 
     def parse_version(raw_version)
       raw_version || 'HEAD'
+    end
+
+    def ruby_file_path(filename)
+      file_path(shard.username, shard.name, shard.version, filename)
     end
 
     def shard_file_path
