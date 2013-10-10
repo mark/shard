@@ -5,5 +5,6 @@ $:.unshift 'lib'
 require 'thor'
 require 'shard'
 require 'shard/cli'
+require 'shard/cli/config'
 
-Shard::CLI.start(ARGV)
+Shard::Cli.start(ARGV)

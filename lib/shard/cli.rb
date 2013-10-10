@@ -1,6 +1,6 @@
 require 'thor'
 
-class Shard::CLI < Thor
+class Shard::Cli < Thor
 
   ########
   #      #
@@ -67,6 +67,18 @@ class Shard::CLI < Thor
 
   def test(shard_line)
     Shard::Loader.test shard_line
+  end
+
+  ##########
+  #        #
+  # Config #
+  #        #
+  ##########
+  
+  desc "config", "Set up Github credentials for use in shard"
+
+  def config
+    Shard::CLI::Config.run
   end
 
 end
