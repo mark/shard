@@ -59,6 +59,13 @@ __$ shard fetch *username/shard*__
 
 This downloads the code for the named shard, and saves it in `~/.shard/username/shard/HEAD/`.  This will always fetch a fresh version of the source.
 
+```
+~ markjosef$ shard fetch mark/pointer
+Saving description.md
+Saving pointer.shard.rb
+Saving pointer_spec.rb
+```
+
 __$ shard exec *username/shard*__
 
 This runs the named shard.  If it hasn't been saved to your machine, it will first download it.  Then it loads the shard file, printing all of the output.
