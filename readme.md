@@ -1,7 +1,5 @@
 #![Shard logo](https://raw.github.com/mark/shard/master/resources/logo.shard.png) shard
 
----
-
 *What is shard?*
 
 Shard is a light-weight code loading-and-running-and-sharing tool, built on top of [gist](http://gist.github.com).
