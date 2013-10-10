@@ -30,7 +30,7 @@ That gives you the `shard` library & binary.  From there, there are two ways to 
 
 The shard binary gives you a number of command line functions to find, load, and run shards:
 
-**$ shard list *username***
+__$ shard list *username*__
 
 Displays a list of all of the shards for the named github user.
 
@@ -55,11 +55,11 @@ multiple_files:
   URL         | https://gist.github.com/6858906
 ```
 
-**$ shard fetch *username/shard***
+__$ shard fetch *username/shard*__
 
 This downloads the code for the named shard, and saves it in `~/.shard/username/shard/HEAD/`.  This will always fetch a fresh version of the source.
 
-**$ shard exec *username/shard***
+__$ shard exec *username/shard*__
 
 This runs the named shard.  If it hasn't been saved to your machine, it will first download it.  Then it loads the shard file, printing all of the output.
 
@@ -70,7 +70,7 @@ Hello, yourself!
 ```
 
 
-**$ shard test *username/shard***
+__$ shard test *username/shard*__
 
 This runs the named shard—but instead of running the *shardname*.shard.rb file, it runs all of the *_test.rb and *_spec.rb files.  (You can control when your shard file gets loaded by manually requiring it via `require_relative`).
 
