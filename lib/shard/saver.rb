@@ -10,7 +10,7 @@ class Shard
     
     include ShardDirectory
 
-    attr_reader :shard, :gist, :full_gist
+    attr_reader :shard, :gist, :full_gist, :options
 
     ###############
     #             #
@@ -18,8 +18,9 @@ class Shard
     #             #
     ###############
     
-    def initialize(shard)
+    def initialize(shard, options = {})
       @shard   = shard
+      @options = options
     end
 
     #################
@@ -28,8 +29,8 @@ class Shard
     #               #
     #################
     
-    def self.save(shard)
-      new(shard).save!
+    def self.save(shard, options = {})
+      new(shard, options).save!
     end
 
     ####################
@@ -42,8 +43,12 @@ class Shard
       create_shard_dir(shard.username, shard.name, shard.version)
       fetch_shard_contents
 
-      gist.ruby_files.each do |file|
+      gist.all_files.each do |file|
         write_file(file)
+      end
+
+      if options[:verbose]
+        puts "VERSION #{ version(8) }..."
       end
     end
 
@@ -60,11 +65,21 @@ class Shard
     end
 
     def write_file(file)
-      path = file_path(shard.username, shard.name, shard.version, file.filename)
+      path     = file_path(shard.username, shard.name, shard.version, file.filename)
+      contents = file_contents(file.filename)
 
-      File.write path, file_contents(file.filename)
+      if options[:verbose]
+        puts "Saving #{ file.filename }"
+      end
+
+      File.write path, contents
     end
     
+    def version(length)
+      full_version = full_gist.history.first.version
+      full_version[0...length]
+    end
+
   end
 
 end

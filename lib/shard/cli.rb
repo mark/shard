@@ -54,7 +54,7 @@ class Shard::CLI < Thor
     username, shard = shard_line.split '/'
     shard = Shard::ShardRecord.new(username, shard, 'HEAD')
 
-    Shard::Saver.save(shard)
+    Shard::Saver.save(shard, verbose: true)
   end
 
   ########
