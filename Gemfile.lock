@@ -3,6 +3,7 @@ PATH
   specs:
     shard (0.1.1)
       octokit (= 1.25.0)
+      thor
 
 GEM
   remote: https://rubygems.org/
@@ -44,4 +45,3 @@ DEPENDENCIES
   rake
   shard!
   simplecov
-  thor

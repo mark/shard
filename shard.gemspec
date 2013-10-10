@@ -21,8 +21,8 @@ You can load the shard's code using a Kernel#shard method, and can load, run, an
   s.required_ruby_version = '>= 1.9.3'
 
   s.add_dependency 'octokit', '= 1.25.0'
+  s.add_dependency 'thor'
 
   s.add_development_dependency 'rake'
-  s.add_development_dependency 'thor'
   s.add_development_dependency 'bundler'
 end
