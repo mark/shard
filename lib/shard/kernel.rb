@@ -4,10 +4,4 @@ module Kernel
     Shard::Loader.load(shard_line)
   end
 
-  def require_shard_file(filename = nil)
-    raise ArgumentError unless Shard.current_loader
-
-    Shard.current_loader.load_file(filename)
-  end
-
 end
