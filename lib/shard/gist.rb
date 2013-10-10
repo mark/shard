@@ -1,4 +1,3 @@
-require 'open-uri'
 require 'yaml'
 
 class Shard
@@ -29,6 +28,10 @@ class Shard
     #                  #
     ####################
     
+    def all_files
+      files.values
+    end
+
     def description
       @gist_hash.description
     end
