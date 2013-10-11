@@ -4,7 +4,7 @@ PATH
     shard (0.1.1)
       netrc (~> 0.7.7)
       octokit (= 1.25.0)
-      thor
+      thor (~> 0.18.1)
 
 GEM
   remote: https://rubygems.org/
