@@ -1,18 +1,8 @@
-require 'octokit'
-require 'netrc'
 require 'io/console'
 
 module Shard::CLI
 
   class Config
-
-    ################
-    #              #
-    # Declarations #
-    #              #
-    ################
-    
-    GITHUB_API_ENTRY = "api.github.com"
 
     #################
     #               #
@@ -68,13 +58,7 @@ EOF
     end
 
     def credentials_saved?
-      username, password = netrc_file[GITHUB_API_ENTRY]
-
-      !(username.nil? || password.nil?)
-    end
-
-    def netrc_file
-      @netrc_file ||= Netrc.read
+      Shard::Credentials.saved?
     end
 
     def replace_credentials
@@ -89,8 +73,7 @@ EOF
     end
 
     def save_credentials(username, password)
-      netrc_file[GITHUB_API_ENTRY] = username, password
-      netrc_file.save
+      Shard::Credentials.new(username, password).save
     end
 
     def validate_login
@@ -107,7 +90,7 @@ EOF
     end
 
     def valid_login?
-      Octokit.validate_credentials netrc: true
+      Shard::Credentials.valid?
     end
 
     def yes?

@@ -11,6 +11,7 @@ class Shard
     end
   end
 
+  require 'shard/credentials'
   require 'shard/shard_directory'
   require 'shard/loader'
   require 'shard/saver'
