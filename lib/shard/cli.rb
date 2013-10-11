@@ -2,6 +2,7 @@ module Shard::CLI
 
   require 'shard/cli/commands'
   require 'shard/cli/config'
+  require 'shard/cli/list'
 
   ##################
   #                #
