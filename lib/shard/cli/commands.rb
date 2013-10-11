@@ -37,10 +37,7 @@ module Shard::CLI
     desc "USERNAME/SHARD fetch", "Downloads the shard named SHARD for Github user USERNAME"
 
     def fetch(shard_line)
-      username, shard = shard_line.split '/'
-      shard = Shard::ShardRecord.new(username, shard, 'HEAD')
-
-      Shard::Saver.save(shard, verbose: true)
+      Shard::Saver.save shard_line, verbose: true
     end
 
     ########
