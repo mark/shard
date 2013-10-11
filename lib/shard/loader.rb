@@ -10,7 +10,10 @@ class Shard
     
     include ShardDirectory
 
-    attr_reader :shard
+    SHARD_FILE_PATTERN = %q(*shard.rb)
+    TEST_FILE_PATTERNS = %w( *_spec.rb *_test.rb )
+
+    attr_reader :ref
 
     ###############
     #             #
@@ -19,7 +22,7 @@ class Shard
     ###############
     
     def initialize(shard_line)
-      parse_shard_line(shard_line)
+      @ref = Shard::Ref(shard_line)
     end
 
     #################
@@ -43,69 +46,27 @@ class Shard
     ####################
     
     def load
-      ensure_shard_saved
-
-      Shard.current_loader, previous_loader = self, Shard.current_loader
-      require shard_file_path
-      Shard.current_loader = previous_loader
+      load_file(SHARD_FILE_PATTERN)
     end
 
     def load_file(filename)
-      path = filename ? ruby_file_path(filename) : shard_file_path
-      require path
+      ensure_shard_saved
+
+      require file_path(ref, filename)
     end
 
     def test
       ensure_shard_saved
 
-      Shard.current_loader, previous_loader = self, Shard.current_loader
-      require *shard_test_paths
-      Shard.current_loader = previous_loader
+      require *file_paths(ref, *TEST_FILE_PATTERNS)
     end
 
     private
 
-    def already_loaded?
-      shard_dir_exists?(shard.username, shard.name, shard.version)
-    end
-
     def ensure_shard_saved
-      unless already_loaded?
-        Shard::Saver.save shard
+      unless shard_dir_exists?(ref)
+        Shard::Saver.save ref
       end
-    end
-
-    def parse_shard_line(shard_line)
-      if match = shard_line.match(Shard::SHARD_LINE)
-        username = match[1]
-        name     = match[2]
-        version  = parse_version match[3]
-
-        @shard = Shard::ShardRecord.new(username, name, version)
-      end
-    end
-
-    def parse_version(raw_version)
-      raw_version || 'HEAD'
-    end
-
-    def ruby_file_path(filename)
-      file_path(shard.username, shard.name, shard.version, filename)
-    end
-
-    def shard_file_path
-      path = file_path(shard.username, shard.name, shard.version, '*shard.rb')
-      Dir[ path ].first
-    end
-
-    def shard_test_paths
-      test_path  = file_path(shard.username, shard.name, shard.version, '*_test.rb')
-      test_files = Dir[ test_path ]
-
-      spec_path  = file_path(shard.username, shard.name, shard.version, '*_spec.rb')
-      spec_files = Dir[ spec_path ]
-
-      test_files + spec_files
     end
 
   end

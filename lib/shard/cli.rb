@@ -10,7 +10,7 @@ module Shard::CLI
   ##################
   
   def self.start(args)
-    if args[0] =~ Shard::SHARD_LINE
+    if Shard::Ref.valid?(args[0])
       args << "exec" if args.length == 1
       args[0], args[1] = args[1], args[0]
     end

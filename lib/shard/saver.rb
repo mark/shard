@@ -10,7 +10,9 @@ class Shard
     
     include ShardDirectory
 
-    attr_reader :shard, :gist, :full_gist, :options
+    attr_reader :ref, :gist, :full_gist, :options
+
+    SHA_LENGTH = 8
 
     ###############
     #             #
@@ -18,8 +20,8 @@ class Shard
     #             #
     ###############
     
-    def initialize(shard, options = {})
-      @shard   = shard
+    def initialize(shard_line_or_ref, options = {})
+      @ref     = Shard::Ref(shard_line_or_ref)
       @options = options
     end
 
@@ -29,8 +31,8 @@ class Shard
     #               #
     #################
     
-    def self.save(shard, options = {})
-      new(shard, options).save!
+    def self.save(shard_line, options = {})
+      new(shard_line, options).save!
     end
 
     ####################
@@ -40,7 +42,7 @@ class Shard
     ####################
     
     def save!
-      create_shard_dir(shard.username, shard.name, shard.version)
+      create_shard_dir(ref)
       fetch_shard_contents
 
       gist.all_files.each do |file|
@@ -48,15 +50,15 @@ class Shard
       end
 
       if options[:verbose]
-        puts "VERSION #{ version(8) }..."
+        puts "VERSION #{ version }..."
       end
     end
 
     private
 
     def fetch_shard_contents
-      lister     = Shard::Lister.new(shard.username)
-      @gist      = lister.shards[shard.name]
+      lister     = Shard::Lister.new(ref.user)
+      @gist      = lister.shards[ref.name]
       @full_gist = Octokit.gist gist.id
     end
 
@@ -65,7 +67,7 @@ class Shard
     end
 
     def write_file(file)
-      path     = file_path(shard.username, shard.name, shard.version, file.filename)
+      path     = file_path(ref, file.filename)
       contents = file_contents(file.filename)
 
       if options[:verbose]
@@ -75,7 +77,7 @@ class Shard
       File.write path, contents
     end
     
-    def version(length)
+    def version(length = SHA_LENGTH)
       full_version = full_gist.history.first.version
       full_version[0...length]
     end

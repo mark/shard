@@ -8,36 +8,36 @@ class Shard
     #                #
     ##################
     
-    def create_root
-      unless Dir.exists?(path)
-        Dir.mkdir(path)
-      end
-    end
+    def create_shard_dir(ref)
+      dir = directory(ref)
 
-    def create_shard_dir(username, shard, version)
-      dir = directory(username, shard, version)
-
-      unless shard_dir_exists?(username, shard, version)
+      unless shard_dir_exists?(ref)
         FileUtils.mkpath(dir)
       end
     end
 
-    def shard_dir_exists?(username, shard, version)
-      dir = directory(username, shard, version)
-
-      Dir.exists?(dir)
+    def shard_dir_exists?(ref)
+      Dir.exists? directory(ref)
     end
 
-    def directory(username, shard, version)
-      File.join(path, username, shard, version)
+    def directory(ref)
+      File.join(root_path, ref.user, ref.name, ref.version)
     end
 
-    def path
+    def root_path
       File.join(Dir.home, '.shard')
     end
 
-    def file_path(username, shard, version, filename)
-      File.join( directory(username, shard, version), filename )
+    def file_path(ref, filename)
+      file_paths(ref, filename).first
+    end
+
+    def file_paths(ref, *filenames)
+      full_names = filenames.map do |filename|
+        File.join( directory(ref), filename)
+      end
+
+      Dir[ *full_names ]
     end
 
   end
