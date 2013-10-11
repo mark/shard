@@ -67,6 +67,26 @@ module Shard::CLI
       Shard::CLI::Config.run
     end
 
+    ########
+    #      #
+    # View #
+    #      #
+    ########
+    
+    desc "USERNAME/SHARD view", "Opens the shard in a browser window"
+
+    def view(shard_line)
+      if line = Shard::Ref.parse(shard_line)
+        lister = Shard::Lister.new(line.user)
+        shard  = lister.shards[line.name]
+        url    = shard.url
+
+        `open #{ url }`
+      else
+        puts "'#{ shard_line }' is not a valid shard reference."
+      end
+    end
+
   end
 
 end
