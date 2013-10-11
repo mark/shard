@@ -42,6 +42,8 @@ class Shard
     ####################
     
     def save!
+      return if shard_dir_exists?(ref) && options[:lazy]
+      
       create_shard_dir(ref)
       fetch_shard_contents
 

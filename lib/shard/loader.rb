@@ -64,9 +64,7 @@ class Shard
     private
 
     def ensure_shard_saved
-      unless shard_dir_exists?(ref)
-        Shard::Saver.save ref
-      end
+      Shard::Saver.save ref, lazy: true
     end
 
   end
