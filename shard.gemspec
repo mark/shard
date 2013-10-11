@@ -23,7 +23,7 @@ You can load the shard's code using a Kernel#shard method, and can load, run, an
   s.add_dependency 'octokit', '= 1.25.0'
   s.add_dependency "netrc",   "~> 0.7.7"
   s.add_dependency 'thor',    '~> 0.18.1'
-  
+
   s.add_development_dependency 'rake'
   s.add_development_dependency 'bundler'
 end
