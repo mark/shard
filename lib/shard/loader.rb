@@ -12,8 +12,6 @@ class Shard
 
     attr_reader :shard
 
-    SHARD_LINE_REGEX = %r{([a-zA-Z0-9_-]+)/(\w+)(?::(\w+))?}
-
     ###############
     #             #
     # Constructor #
@@ -78,7 +76,7 @@ class Shard
     end
 
     def parse_shard_line(shard_line)
-      if match = shard_line.match(SHARD_LINE_REGEX)
+      if match = shard_line.match(Shard::SHARD_LINE)
         username = match[1]
         name     = match[2]
         version  = parse_version match[3]
