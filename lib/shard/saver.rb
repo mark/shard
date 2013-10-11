@@ -61,7 +61,7 @@ class Shard
     def fetch_shard_contents
       lister     = Shard::Lister.new(ref.user)
       @gist      = lister.shards[ref.name]
-      @full_gist = Octokit.gist gist.id
+      @full_gist = Shard.api.gist gist.id
     end
 
     def file_contents(filename)

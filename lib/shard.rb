@@ -1,6 +1,7 @@
 class Shard
-  class << self
-    attr_accessor :current_loader
+  
+  def self.api
+    @api ||= Octokit::Client.new netrc: (Credentials.saved? && Credentials.valid?)
   end
 
   def self.Ref(shard_line)

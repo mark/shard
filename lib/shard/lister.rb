@@ -1,5 +1,3 @@
-require 'octokit'
-
 class Shard
 
   class Lister
@@ -48,7 +46,7 @@ class Shard
     private
 
     def fetch_gists
-      Octokit.gists username
+      Shard.api.gists username
     end
 
     def gist_by_id(id)
