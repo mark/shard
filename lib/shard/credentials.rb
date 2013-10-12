@@ -39,14 +39,21 @@ class Shard
     ####################
     
     def save
-      netrc_file                   = Netrc.read
-      netrc_file[GITHUB_API_ENTRY] = username, password
+      if present?
+        netrc_file[GITHUB_API_ENTRY] = username, password
+      else
+        netrc_file.delete GITHUB_API_ENTRY
+      end
 
       netrc_file.save
     end
 
+    def netrc_file
+      @netrc_file ||= Netrc.read
+    end
+
     def present?
-      !(username.nil? || password.nil?)
+      !(username.to_s == '' || password.to_s == '')
     end
 
   end

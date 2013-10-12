@@ -53,7 +53,7 @@ EOF
 
         validate_login
       else
-        puts "\nCredentials did not save, and I'm not sure why."
+        puts "\nCredentials have been cleared."
       end
     end
 
