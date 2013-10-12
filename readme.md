@@ -87,7 +87,7 @@ __$ shard *username/shard* test__
 This runs the named shard—but instead of running the *shardname*.shard.rb file, it runs all of the *_test.rb and *_spec.rb files.  (You can control when your shard file gets loaded by manually requiring it via `require_relative`).
 
 ```
-~ markjosef$ shard test mark/pointer
+~ markjosef$ shard mark/pointer test
 Run options: --seed 55298
 
 # Running:
