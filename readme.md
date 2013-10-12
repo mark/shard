@@ -125,9 +125,9 @@ The saved Github credentials are valid.
 
 I recommend using a person access token instead of your github password.  You can create a new personal access token [here](https://github.com/settings/tokens/new).
 
-Once you have authenticated, you can view private shards (shards from private gists), as well as the following commands:
-
 If you wish to remove your credentials, just leave username and password blank.
+
+Once you have authenticated, you can view private shards (shards from private gists), as well as the following commands:
 
 __$ shard *username/shard* fork__
 
