@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
 
   s.name        = 'shard'
-  s.version     = '0.1.1'
+  s.version     = '0.2.0'
   s.date        = '2013-10-09'
   s.summary     = "Very lightweight ruby package manager built on gist."
   s.description = <<-EOF
@@ -11,7 +11,7 @@ You can load the shard's code using a Kernel#shard method, and can load, run, an
   EOF
   s.license     = "MIT"
 
-  s.files       = ['lib/shard.rb'] + Dir['lib/shard/*.rb']
+  s.files       = ['lib/shard.rb'] + Dir['lib/shard/**/*.rb']
   s.executables << 'shard'
 
   s.authors     = ["Mark Josef"]
