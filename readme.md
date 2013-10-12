@@ -1,5 +1,8 @@
 #![Shard logo](https://raw.github.com/mark/shard/master/resources/logo.shard.png) shard
 
+1. [Using shards](#using-shards)
+1. [Creating shards](#creating-shards)
+
 *What is shard?*
 
 Shard is a light-weight code loading-and-running-and-sharing tool, built on top of [gist](http://gist.github.com).
@@ -8,11 +11,11 @@ You can load the shard's code using a `#shard` method, and can load, run, and te
 
 *So it's like gems?*
 
-Definitely similar.  But it's a lot more lightweight—which has some pros, and some cons.  You don't get any dependency or version management, you don't get binaries, you don't get folders of files.  But in exchange, you don't need to register or push them anywhere.  You don't have to worry about name collisions.  And you can run and test them directly from the command line.
+Definitely similar.  But it's a lot more lightweight—which has some pros, and some cons.  You don't get any dependency or version management, you don't get executables, you don't get folders of files.  But in exchange, you don't need to register or push them anywhere.  You don't have to worry about name collisions.  And you can run and test them directly from the command line.
 
 Plus, since it's built on top of gist, they're easy to read, easy to edit, and they get stars, comments, and forks.
 
-Think of them as `gem`'s little brother.
+Think of them as `gem`'s baby brother.
 
 *What if I want something a little… more?*
 
@@ -20,15 +23,15 @@ Shards are supposed to be light on features and requirements.  So if you find th
 
 ## Using shards
 
-First, you need to install `shard` via:
+First, you need to install the `shard` gem via:
 
 `gem install shard`
 
-That gives you the `shard` library & binary.  From there, there are two ways to use `shard`: inside another Ruby file, and from the command line.
+That gives you the `shard` library & executable.  From there, there are two ways to use `shard`: inside another Ruby file, and from the command line.
 
 ### Shards on the command line
 
-The shard binary gives you a number of command line functions to find, load, and run shards:
+The shard executable gives you a number of command line functions to find, load, and run shards:
 
 __$ shard list *username*__
 
@@ -55,29 +58,29 @@ multiple_files:
   URL         | https://gist.github.com/6858906
 ```
 
-__$ shard fetch *username/shard*__
-
-This downloads the code for the named shard, and saves it in `~/.shard/username/shard/HEAD/`.  This will always fetch a fresh version of the source.
-
-```
-~ markjosef$ shard fetch mark/pointer
-Saving description.md
-Saving pointer.shard.rb
-Saving pointer_spec.rb
-```
-
-__$ shard exec *username/shard*__
+__$ shard *username/shard*__
 
 This runs the named shard.  If it hasn't been saved to your machine, it will first download it.  Then it loads the shard file, printing all of the output.
 
 ```
-~ markjosef$ shard exec shard-test/basic
+~ markjosef$ shard shard-test/basic
 Hello, world!
 Hello, yourself!
 ```
 
+__$ shard *username/shard* fetch__
 
-__$ shard test *username/shard*__
+This downloads the code for the named shard, and saves it in `~/.shard/username/shard/HEAD/`.  This will always fetch a fresh version of the source.
+
+```
+~ markjosef$ shard mark/pointer fetch
+Saving description.md
+Saving pointer.shard.rb
+Saving pointer_spec.rb
+VERSION 43baf4ee...
+```
+
+__$ shard *username/shard* test__
 
 This runs the named shard—but instead of running the *shardname*.shard.rb file, it runs all of the *_test.rb and *_spec.rb files.  (You can control when your shard file gets loaded by manually requiring it via `require_relative`).
 
@@ -94,11 +97,54 @@ Finished in 0.002799s, 1786.3523 runs/s, 1786.3523 assertions/s.
 5 runs, 5 assertions, 0 failures, 0 errors, 0 skips
 ```
 
+__$ shard *username/shard* view__
+
+This will open a new browser window to the shard named.  Right now this is OS X only, but when I figure out how to make it cross-platform, I will.
+
+### Authentication
+
+To use shard features that require being logged in to Github, run:
+
+__$ shard config__
+
+```
+~ markjosef$ shard config
+To use shard features that require a Github login,
+please enter your username and password below.
+
+Note, you can provide an Personal Access Token instead
+of a password (recommended).
+(See https://github.com/settings/tokens/new for more information)
+
+  Username | mark
+  Password | 
+Credentials saved to ~/.netrc
+
+The saved Github credentials are valid.
+```
+
+I recommend using a person access token instead of your github password.  You can create a new personal access token [here](https://github.com/settings/tokens/new).
+
+Once you have authenticated, you can view private shards (shards from private gists), as well as the following commands:
+
+If you wish to remove your credentials, just leave username and password blank.
+
+__$ shard *username/shard* fork__
+
+Forks the named shard into your own Github account.  If you're not currently logged in, it will prompt you to enter your credentials (as above).
+
+```
+~ markjosef$ shard zobar/option fork
+Forking zobar/option...
+```
+
 ### Shards inside your ruby code
 
 Much like the `require` and `gem` commands, you can load a shard file from inside any Ruby code using:
 
-`shard 'mark/pointer'`
+`Kernel#shard(shard_path)`
+
+For example:
 
 ```ruby
 gem 'shard'
@@ -130,7 +176,3 @@ For instance, if I create a new gist, and one of the files is called `pointer.sh
 If you want to include multiple ruby files in your shard, use `require_relative` inside your shard file to load other ruby files in the same shard.
 
 If you want to be able to test your shard from the command line, name one of the files *something*_test.rb or *something*_spec.rb.  You can load whatever testing framework you want, but make sure to include your main shard file using `require_relative`.
-
-
-
-
