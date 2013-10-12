@@ -1,5 +1,7 @@
 #![Shard logo](https://raw.github.com/mark/shard/master/resources/logo.shard.png) shard
 
+[![Gem Version](https://badge.fury.io/rb/shard.png)](http://badge.fury.io/rb/shard)
+
 1. [Using shards](#using-shards)
 1. [Creating shards](#creating-shards)
 
