@@ -42,11 +42,11 @@ module Shard::CLI
         return
       end
 
-      if Shard::Credentials.valid?
+      if Shard::Credentials.saved? && Shard::Credentials.valid?
         fork_shard
       else
         puts "You are not currently logged into Github."
-        Shard::Config.run
+        Shard::CLI::Config.run
 
         if Shard::Credentials.saved?
           run
