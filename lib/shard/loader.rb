@@ -52,13 +52,13 @@ class Shard
     def load_file(filename)
       ensure_shard_saved
 
-      require file_path(ref, filename)
+      require find_file_path(ref, filename)
     end
 
     def test
       ensure_shard_saved
 
-      require *file_paths(ref, *TEST_FILE_PATTERNS)
+      require *find_file_paths(ref, *TEST_FILE_PATTERNS)
     end
 
     private

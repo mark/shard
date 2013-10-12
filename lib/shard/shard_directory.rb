@@ -28,11 +28,15 @@ class Shard
       File.join(Dir.home, '.shard')
     end
 
-    def file_path(ref, filename)
-      file_paths(ref, filename).first
+    def file_path(ref, filename, options = {})
+      File.join( directory(ref), filename )
     end
 
-    def file_paths(ref, *filenames)
+    def find_file_path(ref, filename, options = {})
+      find_file_paths(ref, filename).first
+    end
+
+    def find_file_paths(ref, *filenames)
       full_names = filenames.map do |filename|
         File.join( directory(ref), filename)
       end
