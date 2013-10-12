@@ -84,6 +84,19 @@ module Shard::CLI
       end
     end
 
+    ########
+    #      #
+    # Fork #
+    #      #
+    ########
+    
+    desc "USERNAME/SHARD fork", "Forks a copy of the shard into your Github account (requires authentication)"
+
+    def fork(shard_line)
+        Shard::CLI::Fork.run shard_line
+    end
+
+
   end
 
 end
