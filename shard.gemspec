@@ -20,7 +20,7 @@ You can load the shard's code using a Kernel#shard method, and can load, run, an
 
   s.required_ruby_version = '>= 1.9.3'
 
-  s.add_dependency 'octokit', '= 1.25.0'
+  s.add_dependency 'octokit', '~> 3.3.0'
   s.add_dependency "netrc",   "~> 0.7.7"
   s.add_dependency 'thor',    '~> 0.18.1'
 
