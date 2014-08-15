@@ -17,7 +17,7 @@ class Shard
     # Constructor #
     #             #
     ###############
-    
+
     def initialize(gist_hash)
       @gist_hash = gist_hash
     end
@@ -27,7 +27,7 @@ class Shard
     # Instance Methods #
     #                  #
     ####################
-    
+
     def all_files
       files.values
     end
@@ -39,7 +39,7 @@ class Shard
     def id
       @gist_hash.id
     end
-    
+
     def name
       match = shard_file.filename.match(SHARD_FILENAME)
 
@@ -69,7 +69,7 @@ class Shard
     private
 
     def files
-      @gist_hash.files
+      @gist_hash.files.attrs
     end
 
 
