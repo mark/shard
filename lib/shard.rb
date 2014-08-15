@@ -1,5 +1,7 @@
+require 'open-uri'
+
 class Shard
-  
+
   def self.api
     @api ||= Octokit::Client.new netrc: (Credentials.saved? && Credentials.valid?)
   end
