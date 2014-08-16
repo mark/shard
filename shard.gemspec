@@ -1,8 +1,8 @@
 Gem::Specification.new do |s|
 
   s.name        = 'shard'
-  s.version     = '0.2.0'
-  s.date        = '2013-10-09'
+  s.version     = '0.3.0'
+  s.date        = '2014-08-15'
   s.summary     = "Very lightweight ruby package manager built on gist."
   s.description = <<-EOF
 Shard is a light-weight code loading-and-running-and-sharing tool, built on top of http://gist.github.com.
